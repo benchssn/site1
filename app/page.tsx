@@ -13,8 +13,11 @@ export const metadata: Metadata = {
 export default function Home() {
   return <div className="home">
     <section className="wrap home-intro" aria-labelledby="home-title">
-      <h1 id="home-title">Synestharium</h1>
-      <p>Short audiovisual studies in light, colour and sound, and small interactive experiments about how we perceive them.</p>
+      <div>
+        <h1 id="home-title">Synestharium</h1>
+        <p>Short audiovisual studies in light, colour and sound, and small interactive experiments about how we perceive them.</p>
+      </div>
+      <Image src="/art/seed.jpg" alt="Seven overlapping circles forming a flower-like geometric pattern" width={600} height={600} priority />
     </section>
 
     <section className="wrap home-section" id="work" aria-labelledby="home-work">

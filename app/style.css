@@ -1,27 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
 
 :root {
   color-scheme: dark;
-  --bg: #0c0d0c;
-  --panel: #141614;
-  --line: #262926;
+  --bg: #000;
+  --panel: #0f100f;
+  --line: #232622;
   --text: #ecebe6;
   --muted: #a4a79f;
   --accent: #c7d6b8;
   --mono: ui-monospace, "SF Mono", Menlo, monospace;
-  --serif: "Instrument Serif", Georgia, serif;
+  --sans: "Open Sans", system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.65; }
 a { color: inherit; text-decoration: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 button, input { font: inherit; }
 button { cursor: pointer; }
 p, h1, h2, h3 { margin: 0; }
-h1, h2, h3 { font-family: var(--serif); font-weight: 400; line-height: 1.05; letter-spacing: -.01em; }
-h1 { font-size: clamp(2.6rem, 5vw, 3.8rem); }
-h2 { font-size: clamp(1.9rem, 3vw, 2.4rem); }
-h3 { font-size: 1.6rem; }
+h1, h2, h3 { font-weight: 600; line-height: 1.15; letter-spacing: -.02em; }
+h1 { font-size: clamp(2.2rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); }
+h3 { font-size: 1.25rem; }
 .wrap { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
 .skip { position: fixed; top: 8px; left: 12px; z-index: 10; padding: 8px 12px; background: var(--panel); transform: translateY(-150%); }
 .skip:focus { transform: none; }
@@ -48,7 +48,7 @@ nav a:hover, .back:hover { color: var(--text); }
 .account { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 48px; }
 .account .back { display: inline-block; margin-top: 20px; }
 .account-panel { border: 1px solid var(--line); border-radius: 6px; padding: clamp(20px, 4vw, 32px); overflow-wrap: anywhere; }
-.account-panel h2 { margin-bottom: 12px; font-size: 1.9rem; }
+.account-panel h2 { margin-bottom: 12px; font-size: 1.4rem; }
 .account-panel form, .account-panel > p, .account-panel > .button { margin-top: 14px; }
 .account-panel label { display: block; margin-top: 14px; font-size: 14px; }
 .account-panel input { display: block; width: 100%; margin: 6px 0 14px; padding: 10px 12px; color: var(--text); background: var(--bg); border: 1px solid #44483f; border-radius: 4px; }
@@ -85,7 +85,7 @@ nav a:hover, .back:hover { color: var(--text); }
 .collective-preview-rooms small { font: 11px var(--mono); color: #aab1a4; }
 .collective-preview-rooms .preview-selected { background: #20231d; color: #f2f4f1; }
 .collective-preview-content { padding: clamp(12px, 3vw, 26px); }
-.collective-preview-heading h2 { font-size: clamp(2rem, 5vw, 3.5rem); }
+.collective-preview-heading h2 { font-size: clamp(1.4rem, 3vw, 1.9rem); }
 .collective-preview-content > p { padding-block: 10px; border-top: 1px solid #2a2d27; font-size: 13px; color: #d8dcd5; }
 .collective-preview-content strong { display: block; margin-bottom: 3px; color: var(--accent); font-size: 12px; }
 .collective-geometry { width: 62px; height: 62px; flex: none; }
@@ -94,7 +94,7 @@ body:has(.collective-shell) > .header, body:has(.collective-shell) > .footer { d
 .collective-shell { display: grid; grid-template-columns: minmax(185px, 245px) minmax(0, 1fr) minmax(190px, 265px); width: min(1600px, 100%); margin-inline: auto; height: 100svh; min-height: 480px; background: #0c0d0b; }
 .collective-nav, .collective-context { overflow: auto; padding: 26px clamp(12px, 2vw, 25px); }
 .collective-nav { border-right: 1px solid #2e322a; display: flex; flex-direction: column; gap: 22px; background: var(--bg); }
-.collective-nav h1 { font-size: clamp(2.1rem, 3vw, 3rem); letter-spacing: -.025em; line-height: .95; }
+.collective-nav h1 { font-size: clamp(1.3rem, 2vw, 1.6rem); letter-spacing: -.025em; line-height: .95; }
 .collective-nav nav { display: grid; gap: 6px; }
 .collective-nav nav button { display: flex; align-items: center; gap: 10px; min-height: 43px; padding: 8px 10px; text-align: left; width: 100%; border: 1px solid transparent; background: transparent; color: #c0c5bc; font-size: 13px; }
 .collective-nav nav button:hover, .collective-nav nav button[aria-current] { background: #1e211c; border-color: #3c4037; color: #f0f2ef; }
@@ -107,13 +107,13 @@ body:has(.collective-shell) > .header, body:has(.collective-shell) > .footer { d
 .collective-identity { display: flex; align-items: center; gap: 10px; font-size: 13px; overflow-wrap: anywhere; }
 .collective-chat { min-height: 0; display: grid; grid-template-rows: auto minmax(0,1fr) auto; background: var(--bg); }
 .collective-room-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 23px clamp(16px, 3vw, 44px); border-bottom: 1px solid #2e322a; }
-.collective-room-header h2 { font-size: clamp(2.6rem, 5vw, 4.4rem); margin-block: 6px; }
+.collective-room-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-block: 6px; }
 .collective-room-header p { color: #c0c5bb; font-size: 13px; }
 .collective-room-header .collective-connection { display: flex; align-items: center; gap: 8px; font: 11px var(--mono); color: #d8dbd4; }
 .collective-history { overflow: auto; min-height: 0; padding-inline: clamp(14px, 3vw, 44px); overscroll-behavior: contain; scrollbar-color: #43483e #131511; }
 .collective-empty { color: #c0c5bb; padding-block: 24px; }
 .collective-message { display: grid; grid-template-columns: 30px minmax(0,1fr) auto; gap: 11px; align-items: start; border-bottom: 1px solid #2a2d26; padding-block: 13px; }
-.collective-avatar { display: inline-grid; width: 30px; height: 30px; place-items: center; flex: none; border: 1px solid #4b5145; background: #1b1d19; color: #dfe2dc; font: 17px Georgia, serif; }
+.collective-avatar { display: inline-grid; width: 30px; height: 30px; place-items: center; flex: none; border: 1px solid #4b5145; background: #1b1d19; color: #dfe2dc; font-size: 14px; font-weight: 600; }
 .collective-message-byline { display: flex; gap: 5px 9px; align-items: baseline; flex-wrap: wrap; color: #e6e8e4; font-size: 13px; }
 .collective-message-byline time, .collective-you { color: #b4baaf; font: 11px var(--mono); }
 .collective-message-content p { color: #eef0ed; margin-top: 2px; overflow-wrap: anywhere; white-space: pre-wrap; }
@@ -146,7 +146,7 @@ body:has(.collective-shell) > .header, body:has(.collective-shell) > .footer { d
 .collective-reports div { display: flex; flex-wrap: wrap; gap: 6px; }
 .collective-reports blockquote { margin: 7px 0; white-space: pre-wrap; }
 .collective-settings form { display: grid; gap: 7px; margin: 0; }
-.collective-settings h3 { font-size: 1.45rem; margin-block: 12px 4px; }
+.collective-settings h3 { font-size: 1rem; margin-block: 12px 4px; }
 .collective-settings small { color: #c0c5bb; }
 .collective-settings li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding-block: 4px; }
 .collective-settings .collective-check { display: flex; gap: 6px; margin: 3px 0; align-items: center; }
@@ -162,7 +162,7 @@ body:has(.collective-shell) > .header, body:has(.collective-shell) > .footer { d
   .collective-shell { grid-template-columns: minmax(0,1fr); grid-template-rows: auto minmax(0,1fr) auto; }
   .collective-nav { grid-row: auto; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 6px 10px; max-height: 30svh; border-right: 0; border-bottom: 1px solid #2e322a; padding: 8px 12px; }
   .collective-nav .brand { grid-column: 1; grid-row: 1; font-size: 9px; }
-  .collective-nav h1 { grid-column: 1; grid-row: 2; font-size: 1.9rem; }
+  .collective-nav h1 { grid-column: 1; grid-row: 2; font-size: 1.3rem; }
   .collective-nav nav { grid-column: 1 / -1; grid-row: 3; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 3px; }
   .collective-nav nav button { gap: 4px; font-size: 11px; padding: 5px; min-height: 38px; justify-content: center; }
   .collective-room-number { display: none; }
@@ -171,7 +171,7 @@ body:has(.collective-shell) > .header, body:has(.collective-shell) > .footer { d
   .collective-account .collective-disclosure { border: 0; }
   .collective-account .collective-disclosure[open] { position: absolute; top: 56px; right: 10px; z-index: 3; max-width: min(320px,calc(100vw - 20px)); max-height: 50svh; overflow: auto; padding: 8px 14px 12px; border: 1px solid #4a4f44; background: #181916; }
   .collective-room-header { padding: 10px 14px; }
-  .collective-room-header h2 { font-size: 2.5rem; }
+  .collective-room-header h2 { font-size: 1.5rem; }
   .collective-room-header p { font-size: 12px; }
   .collective-geometry { width: 48px; height: 48px; }
   .collective-context { grid-column: 1; max-height: 23svh; }
