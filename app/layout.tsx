@@ -13,7 +13,6 @@ export default function Layout({ children }: Readonly<{ children: React.ReactNod
     <header className="header wrap">
       <Link href="/" className="brand">Synestharium</Link>
       <nav aria-label="Main navigation">
-        <Link href="/#work">Studies</Link>
         <Link href="/chat">Collective</Link>
         <Link href="/membership">Membership</Link>
       </nav>

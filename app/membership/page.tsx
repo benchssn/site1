@@ -32,7 +32,7 @@ export default async function Membership({ searchParams }: { searchParams: Promi
     <div>
       <h1>Membership</h1>
       <p className="intro">Membership gives you access to The Collective: three rooms for conversation, research and shared experiments.</p>
-      <Link href="/#work" className="back">← Back to the studies</Link>
+      <Link href="/" className="back">← Home</Link>
     </div>
     <div className="account-panel">
       <h2>{user ? "Your membership" : "Sign in"}</h2>

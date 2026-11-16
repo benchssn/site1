@@ -13,7 +13,7 @@ export default async function ObservationPage({ params }: { params: Promise<{ sl
   if (!item) notFound();
 
   return <section className="wrap detail">
-    <Link className="back" href="/#work">← All studies</Link>
+    <Link className="back" href="/">← Home</Link>
     <p className="meta">{item.category} · {item.duration}</p>
     <h1>{item.title}</h1>
     <p className="intro">{item.description}</p>
