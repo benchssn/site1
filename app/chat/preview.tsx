@@ -3,7 +3,7 @@ import Geometry from "./geometry";
 
 export function CollectivePreview() {
   return <figure className="collective-preview">
-    <figcaption>Preview of The Collective · Sample conversation</figcaption>
+    <figcaption>Preview of a room</figcaption>
     <div className="collective-preview-frame">
       <div className="collective-preview-rooms" aria-label="Rooms">
         {rooms.map(({ id, name }, index) => <span className={id === "mind" ? "preview-selected" : ""} key={id}>
@@ -12,8 +12,8 @@ export function CollectivePreview() {
       </div>
       <div className="collective-preview-content">
         <div className="collective-preview-heading"><h2>The Mind</h2><Geometry /></div>
-        <p><strong>◇ &nbsp; aftertone</strong> Has anyone tried sketching an afterimage before it fades?</p>
-        <p><strong>○ &nbsp; prismfield</strong> I tried it with blue light. The edges were the first thing to disappear.</p>
+        <p><strong>aftertone</strong> Has anyone tried sketching an afterimage before it fades?</p>
+        <p><strong>prismfield</strong> I tried it with blue light. The edges were the first thing to disappear.</p>
       </div>
     </div>
   </figure>;

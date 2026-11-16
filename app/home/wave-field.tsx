@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { fieldHeight, fieldWidth, traceInterference, waveInk } from "./interference";
 
-export default function WaveField({ variant }: { variant: "hero" | "laboratory" | "closing" }) {
+export default function WaveField({ variant }: { variant: "laboratory" }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const time = useRef(0);
@@ -39,7 +39,7 @@ export default function WaveField({ variant }: { variant: "hero" | "laboratory" 
       context.setTransform(width / fieldWidth, 0, 0, height / fieldHeight, 0, 0);
       context.clearRect(0, 0, fieldWidth, fieldHeight);
       context.strokeStyle = waveInk;
-      context.lineWidth = variant === "closing" ? 1.6 : 1.02;
+      context.lineWidth = 1.02;
       traceInterference(time.current, phase, (opacity) => {
         context.globalAlpha = opacity;
         context.beginPath();
@@ -107,10 +107,9 @@ export default function WaveField({ variant }: { variant: "hero" | "laboratory" 
         <label htmlFor={phaseId}>Phase difference <output htmlFor={phaseId}>{phase}°</output></label>
         <input id={phaseId} type="range" min="0" max="360" step="15" value={phase}
           aria-valuetext={phase + " degrees"} onChange={(event) => setPhase(Number(event.target.value))} />
-        <div className="wave-scale" aria-hidden="true"><span>0°</span><span>180°</span><span>360°</span></div>
-      </div></> : variant === "hero" ? <a href="#laboratory">Two-source wave interference <span aria-hidden="true">↘</span></a> : null}
+              </div></> : null}
       {!reducedMotion && <button type="button" className="wave-motion" onClick={() => setPaused((value) => !value)}>
-        {paused ? "Resume motion" : "Pause motion"}
+        {paused ? "Play" : "Pause"}
       </button>}
     </figcaption>
   </figure>;

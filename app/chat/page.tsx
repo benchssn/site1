@@ -16,14 +16,13 @@ export default async function CollectivePage() {
 
   if (active) return <Collective />;
   return <section className="wrap detail collective-locked">
-    <Link href="/" className="back">← Back to Synestharium</Link>
-    <p className="eyebrow"><span className="signal" /> SYNESTHARIUM+</p>
+    <Link href="/" className="back">← Home</Link>
     <h1>The Collective</h1>
-    <p className="intro">A private meeting place for people curious about minds, machines, and the nature of reality.</p>
+    <p className="intro">A members’ space for conversation about perception, art and science.</p>
     <p className="collective-gate-note">{unavailable
       ? "Membership status is temporarily unavailable."
-      : "The Commons, The Mind, and The Laboratory are open to active Synestharium+ members."}</p>
-    <Link className="button primary" href="/membership">View membership <span aria-hidden="true">↗</span></Link>
+      : "The Commons, The Mind, and The Laboratory are open to members."}</p>
+    <Link className="button primary" href="/membership">View membership</Link>
     <CollectivePreview />
   </section>;
 }

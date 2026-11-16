@@ -13,12 +13,12 @@ export default async function ObservationPage({ params }: { params: Promise<{ sl
   if (!item) notFound();
 
   return <section className="wrap detail">
-    <Link className="back" href="/#archive">← Back to archive</Link>
-    <p className="eyebrow">STUDY {item.index} / {item.category.toUpperCase()} / {item.duration}</p>
+    <Link className="back" href="/#work">← All studies</Link>
+    <p className="meta">{item.category} · {item.duration}</p>
     <h1>{item.title}</h1>
     <p className="intro">{item.description}</p>
     <video controls playsInline preload="none" poster={"/art/" + item.slug + ".webp"}
       aria-label={item.title} src={"/films/" + item.slug + ".mp4"} />
-    <p className="fineprint">Original demo study. The soundtrack is instrumental and contains no speech.</p>
+    <p className="fineprint">Instrumental soundtrack, no speech.</p>
   </section>;
 }

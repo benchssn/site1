@@ -253,7 +253,7 @@ export default function Collective() {
 
   return <section className="collective-shell" aria-label="The Collective">
     <aside className="collective-nav" aria-label="Rooms and account">
-      <a className="brand" href="/"><span className="mark" aria-hidden="true">⟐</span> SYNESTHARIUM</a>
+      <a className="brand" href="/">Synestharium</a>
       <h1>The Collective</h1>
       <nav aria-label="Chat rooms">{rooms.map(({ id, name }, index) =>
         <button key={id} onClick={() => chooseRoom(id)} aria-current={room === id ? "true" : undefined}>

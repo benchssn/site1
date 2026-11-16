@@ -13,13 +13,13 @@ export function GET(request: Request) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Confirm sign-in — Synestharium</title>
     <style>
-      :root{color-scheme:dark}body{margin:0;display:grid;min-height:100svh;place-items:center;background:#08090f;color:#f4f2f9;font:16px/1.55 system-ui}
-      main{margin:20px;padding:clamp(24px,6vw,48px);border:1px solid #262939;background:#0f111b}h1{font:normal clamp(2rem,7vw,3.5rem) Georgia;margin:10px 0}
-      small{font:12px monospace;letter-spacing:.16em;color:#bec4ff}button{background:#d8d9ff;color:#14152b;padding:12px 16px;border:0;font:600 15px system-ui;cursor:pointer}
-      button:focus-visible{outline:2px solid #d8d9ff;outline-offset:5px}
+      :root{color-scheme:dark}body{margin:0;display:grid;min-height:100svh;place-items:center;background:#0c0d0c;color:#ecebe6;font:16px/1.55 system-ui}
+      main{margin:20px;padding:clamp(24px,6vw,48px);border:1px solid #262926;border-radius:6px}h1{font:normal clamp(2rem,7vw,3rem) Georgia;margin:10px 0}
+      small{font-size:14px;color:#a4a79f}button{background:#ecebe6;color:#0c0d0c;border-radius:4px;padding:12px 16px;border:0;font:600 15px system-ui;cursor:pointer}
+      button:focus-visible{outline:2px solid #c7d6b8;outline-offset:5px}
     </style>
-    <main><small>SYNESTHARIUM</small><h1>Confirm sign-in</h1>
-    <p>Continue to your observatory membership.</p>
+    <main><small>Synestharium</small><h1>Confirm sign-in</h1>
+    <p>Continue to your membership.</p>
     <form method="post" action="/auth/confirm"><input type="hidden" name="token_hash" value="${token}">
     <button type="submit">Sign in</button></form></main></html>`,
     { headers: { ...headers, "Content-Type": "text/html; charset=utf-8",
