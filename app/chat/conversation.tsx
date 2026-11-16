@@ -230,7 +230,7 @@ export default function Conversation({ room, profile, activity, removals, reset,
       <label className="visually-hidden" htmlFor="collective-draft">Your message</label>
       <textarea id="collective-draft" value={draft} onChange={(event) => setDraft(event.target.value)}
         placeholder="Write a message…" rows={2} maxLength={2000} required />
-      <button className="button primary" disabled={sending || !draft.trim()}>{sending ? "Sending…" : "Send"} <span aria-hidden="true">↑</span></button>
+      <button className="button primary" disabled={sending || !draft.trim()}>{sending ? "Sending…" : "Send"}</button>
       {(error || notice) && <p role="status" className="collective-status">{error || notice}</p>}
     </form>
   </>;

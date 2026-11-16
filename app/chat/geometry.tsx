@@ -23,7 +23,7 @@ export default function Geometry() {
       ctx!.clearRect(0, 0, size, size);
       for (let ring = 0; ring < 3; ring++) {
         ctx!.beginPath();
-        ctx!.strokeStyle = ["#d1c4f2bb", "#b29adc65", "#8a77aa55"][ring];
+        ctx!.strokeStyle = ["#c7d6b8bb", "#a9bc9665", "#87977755"][ring];
         for (let point = 0; point <= 72; point++) {
           const angle = point * Math.PI / 36;
           const tempo = time / 3800 + ring * .58;
