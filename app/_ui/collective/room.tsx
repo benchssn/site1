@@ -1,6 +1,8 @@
 "use client";
 
 import { createClient } from "@supabase/supabase-js";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { guidelines, isRoom, rooms, type Alias, type Online, type Profile, type Report, type Room, type RoomMarker } from "@/lib/collective";
 import { ChatError, chatRequest, errorMessage } from "./client-api";
@@ -95,9 +97,12 @@ function Moderation({ onRemoved }: { onRemoved: () => void }) {
   </details>;
 }
 
-export default function Collective() {
+export default function Collective({ initialRoom }: { initialRoom: Room }) {
+  // The room lives in the URL (/community/<room>). Switching uses history.pushState so the
+  // realtime connection and presence survive; back/forward update the room through usePathname.
+  const segment = usePathname().split("/")[2];
+  const room: Room = isRoom(segment) ? segment : initialRoom;
   const [session, setSession] = useState<Session | undefined>();
-  const [room, setRoom] = useState<Room>("commons");
   const [online, setOnline] = useState<Online[]>([]);
   const [unread, setUnread] = useState<Partial<Record<Room, boolean>>>({});
   const [activity, setActivity] = useState<RoomMarker | null>(null);
@@ -107,7 +112,7 @@ export default function Collective() {
   const [locked, setLocked] = useState("");
   const [sessionError, setSessionError] = useState("");
   const [presenceError, setPresenceError] = useState(false);
-  const activeRoom = useRef<Room>("commons");
+  const activeRoom = useRef<Room>(initialRoom);
   const revisions = useRef<Partial<Record<Room, number>>>({});
   const latest = useRef<Partial<Record<Room, number>>>({});
   const refreshSerial = useRef(0);
@@ -227,22 +232,25 @@ export default function Collective() {
     };
   }, [profileId, showOnline, locked, room, refresh]);
 
-  function chooseRoom(next: Room) {
-    if (next === room) return;
-    activeRoom.current = next;
+  useEffect(() => {
+    if (activeRoom.current === room) return;
+    activeRoom.current = room;
     setActivity(null);
     setRemovals([]);
-    setRoom(next);
-    setUnread((value) => ({ ...value, [next]: false }));
+    setUnread((value) => ({ ...value, [room]: false }));
+  }, [room]);
+
+  function chooseRoom(next: Room) {
+    if (next !== room) window.history.pushState(null, "", "/community/" + next);
   }
 
   const profile = credentials?.profile;
   const roomInfo = rooms.find(({ id }) => id === room)!;
   if (locked) return <section className="wrap detail collective-locked">
-    <h1>The Collective</h1><p role="status">{locked}</p><a className="button secondary" href="/membership">Go to membership</a>
+    <h1>The Collective</h1><p role="status">{locked}</p><Link className="button secondary" href="/account/plan?return=/community">View your plan</Link>
   </section>;
   if (!session || !profile) return <section className="wrap detail collective-locked">
-    <a className="back" href="/">← Synestharium</a>
+    <Link className="back" href="/community">← All rooms</Link>
     <div className="collective-gate-heading"><h1>The Collective</h1><Geometry /></div>
     {session ? <div className="account-panel"><h2>Choose a username</h2>
       <p>Your username will appear next to your messages. You can change it later in Settings.</p>
@@ -253,7 +261,7 @@ export default function Collective() {
 
   return <section className="collective-shell" aria-label="The Collective">
     <aside className="collective-nav" aria-label="Rooms and account">
-      <a className="brand" href="/">Synestharium</a>
+      <Link className="back" href="/community">← All rooms</Link>
       <h1>The Collective</h1>
       <nav aria-label="Chat rooms">{rooms.map(({ id, name }, index) =>
         <button key={id} onClick={() => chooseRoom(id)} aria-current={room === id ? "true" : undefined}>
@@ -268,10 +276,7 @@ export default function Collective() {
         <details className="collective-disclosure">
           <summary>Settings</summary>
           <Settings profile={profile} muted={credentials.muted} onSaved={async () => { await refresh(); sync(); }} />
-          <a className="back collective-mobile-billing" href="/membership">Manage membership</a>
         </details>
-        <a className="back" href="/membership">Manage membership</a>
-        <a className="back" href="/">← Return to Synestharium</a>
         {sessionError && <p className="collective-status" role="status">{sessionError}</p>}
       </div>
     </aside>
