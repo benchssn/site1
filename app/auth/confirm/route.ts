@@ -1,4 +1,6 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import { nextCookie, safePath } from "@/lib/paths";
 import { auth, authReady, siteOrigin } from "@/lib/service";
 
 const headers = { "Cache-Control": "private, no-store", "Referrer-Policy": "origin" };
@@ -6,7 +8,7 @@ const headers = { "Cache-Control": "private, no-store", "Referrer-Policy": "orig
 export function GET(request: Request) {
   const token = new URL(request.url).searchParams.get("token_hash");
   if (!authReady() || !token || !/^[a-zA-Z0-9_-]{1,128}$/.test(token)) {
-    return NextResponse.redirect(siteOrigin() + "/membership?notice=invalid-link", { headers });
+    return NextResponse.redirect(siteOrigin() + "/signin?notice=invalid-link", { headers });
   }
   // A separate POST prevents automatic email link scans from consuming the token.
   return new Response(`<!doctype html><html lang="en"><meta charset="utf-8">
@@ -19,7 +21,7 @@ export function GET(request: Request) {
       button:focus-visible{outline:2px solid #c7d6b8;outline-offset:5px}
     </style>
     <main><small>Synestharium</small><h1>Confirm sign-in</h1>
-    <p>Continue to your membership.</p>
+    <p>Continue to your Synestharium workspace.</p>
     <form method="post" action="/auth/confirm"><input type="hidden" name="token_hash" value="${token}">
     <button type="submit">Sign in</button></form></main></html>`,
     { headers: { ...headers, "Content-Type": "text/html; charset=utf-8",
@@ -30,16 +32,20 @@ export async function POST(request: Request) {
   if (request.headers.get("origin") !== siteOrigin()) {
     return new Response("Unexpected origin", { status: 403, headers });
   }
-  let notice = "?notice=invalid-link";
+  let destination = "/signin?notice=invalid-link";
   try {
     const token = (await request.formData()).get("token_hash");
     if (authReady() && typeof token === "string" && /^[a-zA-Z0-9_-]{1,128}$/.test(token)) {
       const client = await auth();
       const { error } = await client.auth.verifyOtp({ type: "email", token_hash: token });
-      if (!error) notice = "";
+      if (!error) {
+        const jar = await cookies();
+        destination = safePath(jar.get(nextCookie)?.value);
+        jar.delete({ name: nextCookie, path: "/auth" });
+      }
     }
   } catch {
     // Malformed submissions return to the same sign-in flow as expired links.
   }
-  return NextResponse.redirect(siteOrigin() + "/membership" + notice, { status: 303, headers });
+  return NextResponse.redirect(siteOrigin() + destination, { status: 303, headers });
 }
