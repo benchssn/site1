@@ -1,6 +1,8 @@
 // One catalogue feeds Home, Learn, Library, Spaces and the public site, so every surface
 // shows the same works with the same access rules.
 
+import type { ThemeId } from "./themes";
+
 export type Access = "free" | "member";
 export type WorkKind = "film" | "experience";
 
@@ -23,6 +25,8 @@ export type Work = {
   /** Instrumental works have no spoken content to transcribe. */
   speech: "none" | "transcript";
   soundNote: string;
+  /** Areas of exploration this work belongs to in the public archive. */
+  themes: ThemeId[];
 };
 
 export const works: Work[] = [
@@ -30,13 +34,13 @@ export const works: Work[] = [
     slug: "afterimage", index: "01", title: "Afterimage", kind: "film", category: "Light study", duration: "0:24",
     description: "A suspended blue corona flickers over a low, slow-moving harmonic bed.",
     access: "free", poster: "/art/afterimage.webp", media: { type: "public", src: "/films/afterimage.mp4" },
-    concepts: ["afterimage"], speech: "none", soundNote: "Instrumental soundtrack, no speech.",
+    concepts: ["afterimage"], speech: "none", soundNote: "Instrumental soundtrack, no speech.", themes: ["mind"],
   },
   {
     slug: "selenite", index: "02", title: "Selenite", kind: "film", category: "Texture study", duration: "0:20",
     description: "A fractured rose-colored surface paired with a cluster of slowly beating tones.",
     access: "free", poster: "/art/selenite.webp", media: { type: "public", src: "/films/selenite.mp4" },
-    concepts: ["beating"], speech: "none", soundNote: "Instrumental soundtrack, no speech.",
+    concepts: ["beating"], speech: "none", soundNote: "Instrumental soundtrack, no speech.", themes: ["mind"],
   },
   {
     slug: "interference-field", index: "03", title: "Interference Field", kind: "experience", category: "Interactive study",
@@ -44,6 +48,7 @@ export const works: Work[] = [
     description: "Two wave sources overlap on a fine-line surface. Shift their phase difference to move the peaks and troughs, and hear a sine tone swell and vanish as the phase moves from 0° to 180°.",
     access: "member", poster: "/art/interference.webp", media: { type: "space" },
     concepts: ["interference", "phase"], speech: "none", soundNote: "Optional generated sine tone, no speech.",
+    themes: ["reality"],
   },
 ];
 

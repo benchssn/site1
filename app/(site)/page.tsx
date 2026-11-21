@@ -1,122 +1,137 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { CollectivePreview } from "@/app/_ui/collective/preview";
+import { AmbientFilm } from "@/app/_ui/ambient-film";
+import { EntryCard } from "@/app/_ui/archive-ui";
 import ScrollStory from "@/app/_ui/scroll-story";
-import SeedField from "@/app/_ui/seed-field";
-import { concepts, observations, series, seriesWorks, spaces } from "@/lib/catalog";
-import { rooms } from "@/lib/collective";
-import { tiers } from "@/lib/plans";
+import {
+  archive, entriesForTheme, featuredTransmissions, instagramProfile, registerLabel, type Register,
+} from "@/lib/archive";
+import { findWork } from "@/lib/catalog";
+import { guidelines, rooms } from "@/lib/collective";
+import { themes } from "@/lib/themes";
 
 export const metadata: Metadata = {
-  title: { absolute: "Synestharium" },
-  description: "Short audiovisual studies in light, colour and sound, and a members' collective for the people who explore them.",
+  title: { absolute: "Synestharium: consciousness and the nature of reality" },
+  description: "An audiovisual exploration of consciousness and the nature of reality. Where neuroscience meets philosophy, ancient wisdom and generative art.",
 };
-// The header reflects the visitor's session.
-export const dynamic = "force-dynamic";
 
-function Chapter({ number, label, title, children, id }: {
-  number: string; label: string; title: string; children: React.ReactNode; id: string;
+function Section({ id, number, label, title, children, className = "" }: {
+  id: string; number: string; label: string; title: string; children: React.ReactNode; className?: string;
 }) {
-  return <section className="chapter wrap" aria-labelledby={id} data-reveal>
-    <div className="chapter-rail">
-      <span className="mono">{number}</span>
-      <span className="chapter-label">{label}</span>
-    </div>
-    <div className="chapter-body">
-      <h2 id={id}>{title}</h2>
-      {children}
-    </div>
+  return <section id={id} className={"section wrap " + className} aria-labelledby={id + "-title"} data-reveal>
+    <header className="section-head">
+      <p className="section-label mono"><span>{number}</span> {label}</p>
+      <h2 id={id + "-title"}>{title}</h2>
+    </header>
+    {children}
   </section>;
 }
 
-function JoinBand({ line }: { line: string }) {
-  return <div className="join-band wrap" data-reveal>
-    <p>{line}</p>
-    <Link className="button primary" href="/plans">See membership plans</Link>
-  </div>;
-}
+export default function Home() {
+  const hero = findWork("afterimage")!;
+  const reels = featuredTransmissions(6);
+  const studio = archive.filter((entry) => entry.format !== "transmission");
+  const registers = Object.entries(registerLabel) as [Register, { title: string; line: string }][];
+  const collectiveRule = guidelines[1];
 
-export default function Landing() {
-  const featured = series[0];
-  const plus = tiers.find((tier) => tier.id === "plus")!;
-  const space = spaces.find((entry) => entry.status === "active")!;
-  return <div className="landing">
+  return <div className="home">
     <ScrollStory />
     <section className="hero" aria-labelledby="hero-title">
-      <SeedField />
+      <div className="hero-art" aria-hidden="true">
+        <Image src={hero.poster} alt="" fill priority sizes="100vw" />
+        {hero.media.type === "public" && <AmbientFilm src={hero.media.src} />}
+      </div>
       <div className="wrap hero-copy">
-        <p className="eyebrow mono">Light · colour · sound</p>
-        <h1 id="hero-title">Learn to notice what the senses are doing.</h1>
-        <p className="intro">Synestharium makes short audiovisual studies on perception, arranges them into guided series, and hosts a members’ collective for the people who explore them.</p>
+        <h1 id="hero-title">
+          <span className="wordmark">Synestharium</span>
+          <span className="tagline">An exploration of consciousness and the nature of reality.</span>
+        </h1>
+        <p className="hero-line">Where neuroscience meets philosophy, ancient wisdom, and generative art.</p>
+        <p className="hero-sub">Audiovisual transmissions exploring the mind, the universe, and the invisible patterns connecting them.</p>
         <div className="actions">
-          <Link className="button primary" href="/plans">Become a member</Link>
-          <Link className="button secondary" href={"/observatory/" + observations[0].slug}>Watch a free study</Link>
+          <Link className="button primary" href="/transmissions">Explore Transmissions</Link>
+          <Link className="button ghost" href="#philosophy">About the Project</Link>
         </div>
       </div>
-      <a className="scroll-cue mono" href="#learn">Scroll ↓</a>
+      <p className="hero-credit mono wrap">From <Link href={"/archive/" + hero.slug}>{hero.title}</Link>, a generative study</p>
     </section>
 
-    <div id="learn" />
-    <Chapter number="01" label="Learn" title="Series that build, studies that stand alone" id="learn-title">
-      <p className="chapter-lede">Each series is an ordered syllabus of short works with a single question running through it.
-        Standalone studies can be watched in any order.</p>
-      <div className="preview-series">
-        <div>
-          <p className="mono">{featured.availability}</p>
-          <h3>{featured.title}</h3>
-          <p>{featured.premise}</p>
+    <Section id="transmissions" number="01" label="Transmissions" title="Ideas, set to light and sound">
+      <p className="section-lede">Short audiovisual pieces that take one idea from neuroscience, physics or philosophy and follow it
+        further than usual. Each pairs narration with an original generative film.</p>
+      {reels.length > 0 ? <>
+        <div className="entry-grid entry-grid-vertical">{reels.map((entry) =>
+          <EntryCard key={entry.slug} entry={entry} />)}</div>
+        <Link className="text-link" href="/transmissions">All transmissions →</Link>
+      </> : <div className="callout">
+        <p>Transmissions are published on Instagram first and gathered here with their transcripts and sources.</p>
+        <a className="button secondary" href={instagramProfile} rel="noopener">Watch on Instagram · @synestharium</a>
+      </div>}
+
+      <h3 className="subhead">From the studio</h3>
+      <div className="entry-grid">{studio.map((entry) => <EntryCard key={entry.slug} entry={entry} />)}</div>
+    </Section>
+
+    <Section id="themes" number="02" label="Areas of exploration" title="Five questions that keep returning">
+      <ol className="theme-index">{themes.map((theme, index) => {
+        const count = entriesForTheme(theme.id).length;
+        return <li key={theme.id}>
+          <span className="mono theme-number">{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            <h3>{count > 0 ? <Link href={"/archive/themes/" + theme.id}>{theme.title}</Link> : theme.title}</h3>
+            <p>{theme.line}</p>
+          </div>
+          <span className="mono theme-count">{count > 0 ? count + (count === 1 ? " work" : " works") : ""}</span>
+        </li>;
+      })}</ol>
+    </Section>
+
+    <Section id="philosophy" number="03" label="The philosophy" title="Open questions, honestly held" className="philosophy">
+      <div className="prose">
+        <p>Synestharium does not claim to have solved consciousness or found the final nature of reality. Nobody has.
+          The work sits where neuroscience, physics and philosophy start asking the same questions, and where older
+          contemplative traditions turn out to have asked them first.</p>
+        <p>The aim is not to hand you conclusions. It is to loosen a few assumptions about what you are and what the world is,
+          and to look closely at what remains.</p>
+        <p>That only works if the different kinds of claim stay distinct:</p>
+      </div>
+      <dl className="registers">{registers.map(([id, entry]) => <div key={id} className={"register register-" + id}>
+        <dt>{entry.title}</dt>
+        <dd>{entry.line}</dd>
+      </div>)}</dl>
+      <p className="section-foot">The visuals are made in TouchDesigner and other generative systems. They are not illustrations of the
+        science. They are a second way into the same question.</p>
+    </Section>
+
+    <Section id="collective" number="04" label="The Collective" title="A place to think out loud">
+      <div className="collective-intro">
+        <div className="prose">
+          <p>The Collective is the members’ space for conversation about the ideas behind the work. Bring what a transmission
+            got right, what it left out, and what you would ask next.</p>
+          <blockquote className="rule">
+            <p>“{collectiveRule}”</p>
+            <footer className="mono">From the Collective’s guidelines</footer>
+          </blockquote>
         </div>
-        <ol>{seriesWorks(featured).map(({ item }, index) => <li key={item.slug}>
+        <ul className="room-index">{rooms.map((room, index) => <li key={room.id}>
           <span className="mono">{String(index + 1).padStart(2, "0")}</span>
-          <span>{item.title}</span>
-          <span className={"badge " + (item.access === "free" ? "badge-free" : "badge-locked")}>{item.access === "free" ? "Free" : "Synestharium+"}</span>
-        </li>)}</ol>
+          <div><strong>{room.name}</strong><p>{room.description}</p></div>
+        </li>)}</ul>
       </div>
-      <h3 className="subhead">Open studies. Watch now, no account needed.</h3>
-      <ul className="film-row">{observations.map((work) => <li key={work.slug}>
-        <Link href={"/observatory/" + work.slug}>
-          <Image src={work.poster} alt="" width={640} height={360} />
-          <span className="mono">{work.index} · {work.category} · {work.duration}</span>
-          <strong>{work.title}</strong>
-        </Link>
-      </li>)}</ul>
-    </Chapter>
-
-    <JoinBand line="Membership unlocks the full syllabus, the Collective and Spaces." />
-
-    <Chapter number="02" label="Library" title="A library that connects the works" id="library-title">
-      <p className="chapter-lede">Every release is filed alongside the ideas it explores, with transcripts and sources as the catalogue grows.</p>
-      <ul className="concept-row">{concepts.map((concept) => <li key={concept.slug}>
-        <strong>{concept.title}</strong>
-        <span>{concept.summary}</span>
-      </li>)}</ul>
-    </Chapter>
-
-    <Chapter number="03" label="Collective" title="Rooms for thinking out loud" id="collective-title">
-      <p className="chapter-lede">The Collective is a small, moderated members’ space with {rooms.length} rooms: {rooms.map(({ name }) => name).join(", ")}.</p>
-      <CollectivePreview />
-    </Chapter>
-
-    <JoinBand line="Join the conversation in the members’ rooms." />
-
-    <Chapter number="04" label="Spaces" title="Step inside a study" id="spaces-title">
-      <div className="spaces-preview">
-        <Image src="/art/interference.webp" alt="Fine lines tracing the surface where two sets of ripples overlap" width={800} height={490} />
-        <div>
-          <h3>{space.title}</h3>
-          <p>{space.description}</p>
-          <p className="fineprint">For Synestharium+ members.</p>
-        </div>
-      </div>
-    </Chapter>
-
-    <section className="closing wrap" aria-labelledby="closing-title" data-reveal>
-      <h2 id="closing-title">Join Synestharium+</h2>
-      <ul>{plus.unlocks.map((line) => <li key={line}>{line}</li>)}</ul>
       <div className="actions">
-        <Link className="button primary" href="/plans">Choose your plan</Link>
-        <Link className="button secondary" href="/signin">Sign in</Link>
+        <Link className="button secondary" href="/community">Enter the Collective</Link>
+        <span className="fineprint">Open to Synestharium+ members.</span>
+      </div>
+    </Section>
+
+    <section className="support wrap" aria-labelledby="support-title" data-reveal>
+      <h2 id="support-title">Support the work</h2>
+      <p>Synestharium is independent. Synestharium+ membership helps keep it that way, and opens the Collective, the
+        Interference Field experiment and member works.</p>
+      <div className="actions">
+        <Link className="text-link" href="/plans">Membership →</Link>
+        <Link className="text-link muted-link" href="/signin">Sign in</Link>
       </div>
     </section>
   </div>;

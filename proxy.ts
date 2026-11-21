@@ -39,9 +39,11 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
+// Public content pages (/, /transmissions, /archive) are left out so they stay static and cacheable.
+// The header learns the session from /api/session, which is matched so the session is refreshed there.
 export const config = {
   matcher: [
-    "/", "/plans", "/signin", "/membership", "/observatory/:path*", "/chat",
+    "/plans", "/signin", "/membership", "/chat", "/api/session",
     "/dashboard/:path*", "/community/:path*", "/learn/:path*", "/works/:path*",
     "/spaces/:path*", "/library/:path*", "/account/:path*",
     "/api/chat", "/api/progress", "/api/billing/:path*",

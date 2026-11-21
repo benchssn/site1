@@ -1,6 +1,6 @@
 # Synestharium redesign: audit and implementation plan
 
-Status: **audit complete; nothing rewritten yet.** Written 21 November 2026, against `main` at `e3842a4`.
+Status: **steps 1–4 implemented** (see Progress at the end). Audit Written 21 November 2026, against `main` at `e3842a4`.
 
 How this was assessed: by reading the whole repository, running a production build (which passes), and screenshotting the current homepage at 1440px and 390px. The live site at synestharium.com could not be reached from the build environment, which blocks it at the network level. `render.yaml` deploys this repository to that domain, so the repository is treated as what is live. A web search found no public Synestharium channels or transmissions.
 
@@ -167,3 +167,36 @@ Adding a transmission means adding one object (and later, if wanted, a Markdown 
 3. **Learn and series framing in the members' workspace:** keep it as-is for now (recommended, so nothing breaks), or rename it in a later pass?
 
 Until transmissions are supplied, Featured Transmissions will show the two real studies and the experiment, honestly labelled. The narrated titles in the brief will not appear.
+
+---
+
+## Progress
+
+### Decisions (21 November 2026)
+
+- Transmissions are Instagram reels from @synestharium, embedded on the site.
+- Transmissions are free and public.
+- The members' workspace stays as it is. It only picks up the new palette.
+
+### Done: steps 1–4
+
+| Step | What changed |
+|---|---|
+| 1. Foundations | Inter and IBM Plex Mono through `next/font` (the render-blocking `@import` is gone). New tokens: black, silver, cyan `#8fd3e8`, violet `#b4a6f4`. The member area's green tints are swapped for cool equivalents. New public header with Home · Transmissions · Archive · Collective · About, plus a quieter Membership / Sign in, and a full-screen mobile menu. The header learns sign-in state from `/api/session`, so `/`, `/transmissions` and `/archive/*` are now **static and cacheable** (they were rendered per request with `no-store`). The `proxy.ts` gating of member routes is unchanged. |
+| 2. Data model | `lib/themes.ts` holds the five themes. `content/transmissions.ts` is where reels are added, with a documented template. `lib/archive.ts` normalises transmissions and studio works into one list, and provides reel link parsing (a malformed link fails the build), related works and active themes. Works in `lib/catalog.ts` gain a `themes` field. |
+| 3. Homepage | The hero uses the real Afterimage artwork, with a muted looping excerpt that starts only when motion is allowed and Save-Data is off. Sections: Transmissions, Areas of exploration, The philosophy (evidence / interpretation / speculation), The Collective (real rooms and a real guideline, no invented messages), and one quiet "Support the work" block. The seed-of-life hero canvas has been removed. |
+| 4. Transmissions and archive | `/transmissions` and `/transmissions/[slug]`: a click-to-load Instagram embed (nothing loads from Instagram until play), synopsis, themes, kinds of claim, transcript, sources and related works. `/archive` has theme filters as static pages at `/archive/themes/[theme]`; only themes with work get a page. `/archive/[slug]` covers studies and experiments. `/observatory/[slug]` now sends a 308 redirect to `/archive/[slug]`. |
+
+Checks run: production build; axe (WCAG 2.1 AA and best practice) on every new page at 1440px and 390px, with no violations; a keyboard tab order check with a visible focus ring at each stop; no horizontal overflow at 390, 768 or 1440px; and the member dashboard and plans page checked with the local preview account.
+
+### To add a transmission
+
+Add an entry to `content/transmissions.ts`: slug, title, the reel's share link, synopsis and themes. Everything else is optional. The homepage, `/transmissions`, the archive, the theme pages and the "works" counts all update on the next deploy.
+
+### Still open
+
+- No reels are listed yet, because Instagram could not be reached from the build environment. Until reels are added, the site links to the @synestharium profile instead.
+- The Instagram embed's height adjusts using Instagram's own `MEASURE` message, with a 720px fallback. This could not be tested against a live reel here, so check it once the first reel is added.
+- Collective and About in the nav point to homepage sections until step 5 builds their pages.
+- `app/_ui/collective/preview.tsx` still shows two invented messages on the members' `/community` page (for non-members). It was left alone because the members' area was kept as-is. Recommendation: remove the messages.
+- Still to do: steps 5 (About, Collective pages), 6 (Plans copy), 7 (SEO: OG image, sitemap, robots, JSON-LD) and 8 (full verification pass).
