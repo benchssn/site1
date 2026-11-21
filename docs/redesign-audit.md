@@ -61,7 +61,7 @@ Supabase (auth, Postgres, Realtime, Storage), Stripe, and Google Fonts (CSS `@im
 ### Visual identity
 
 - The palette is mostly right: black, off-white, and a sage-green accent (`#c7d6b8`). The brief asks for silver with cyan and violet accents, which matches the real artworks (blue and rose-violet). The green clashes with them.
-- The hero is a browser-drawn seed-of-life canvas animation. It is calm and respects reduced motion, but it is sacred geometry (a mystical-cliché risk), and it is **not an actual Synestharium artwork** while real ones sit unused.
+- The hero is a browser-drawn seed-of-life canvas animation. It is calm and respects reduced motion. *(Correction: the audit wrongly treated Afterimage as project artwork and proposed replacing this. The seed of life stays as the hero.)*
 - The interface is restrained and has no glassmorphism or gradients, which is good. Cards, badges and pill buttons lean toward SaaS.
 - The typeface is Open Sans, which is legible but generic.
 
