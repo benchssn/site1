@@ -12,8 +12,8 @@ export default function Archive() {
     <header className="page-head">
       <p className="section-label mono">Archive</p>
       <h1>Archive</h1>
-      <p className="lede">Every published work, filed by the questions it explores: narrated transmissions, wordless studies in light
-        and sound, and experiments you can operate yourself.</p>
+      <p className="lede">Every published work, filed by the questions it explores: narrated transmissions and experiments you can
+        operate yourself.</p>
     </header>
     <ThemeFilter />
     <p className="count-line mono" role="status">{archive.length} {archive.length === 1 ? "work" : "works"}</p>

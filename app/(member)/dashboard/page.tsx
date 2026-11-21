@@ -18,9 +18,9 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const viewer = await requireViewer();
   const progress = await progressFor(viewer);
   const featured = series[0];
-  const state = seriesState(featured, progress);
-  const next = state.next.item;
-  const nextOpen = canAccess(next.access, viewer);
+  const state = featured ? seriesState(featured, progress) : null;
+  const next = state?.next?.item;
+  const nextOpen = next ? canAccess(next.access, viewer) : false;
   const space = spaces.find((entry) => entry.status === "active")!;
   const doneLabel = (slug: string) => progress.done.has(slug) ? "Completed" : progress.started.has(slug) ? "In progress" : undefined;
 
@@ -37,14 +37,14 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <p className="tile-big">{viewer.member ? "Synestharium+" : "Free account"}</p>
         <p className="muted">{viewer.statusUnavailable ? "Membership status is temporarily unavailable."
           : viewer.member && viewer.accessUntil ? "Access through " + formatDate(viewer.accessUntil)
-            : "Open studies, the Library and progress tracking."}</p>
+            : "The Library and progress tracking."}</p>
         <div className="actions">
           {viewer.member ? <Link className="button secondary small" href="/account">Manage membership</Link>
             : <Link className="button primary small" href="/account/plan?return=/dashboard">Upgrade</Link>}
         </div>
       </section>
 
-      <section className="tile tile-continue" aria-labelledby="continue-title">
+      {featured && state && next && <section className="tile tile-continue" aria-labelledby="continue-title">
         <h2 id="continue-title" className="tile-label mono">{state.begun ? "Continue your series" : "Start a series"}</h2>
         <p className="tile-big">{featured.title}</p>
         {progress.tracked
@@ -58,7 +58,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
               : <Link className="button primary small" href={upgradeHref(workHref(next))}>Unlock part {state.parts.indexOf(state.next) + 1}</Link>}
           <Link className="button secondary small" href={"/learn/series/" + featured.slug}>Syllabus</Link>
         </div>
-      </section>
+      </section>}
 
       <section className="tile" aria-labelledby="collective-tile">
         <h2 id="collective-tile" className="tile-label mono">Collective</h2>

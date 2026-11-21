@@ -120,8 +120,8 @@ export default function Home() {
 
     <section className="support wrap" aria-labelledby="support-title" data-reveal>
       <h2 id="support-title">Support the work</h2>
-      <p>Synestharium is independent. Synestharium+ membership helps keep it that way, and opens the Collective, the
-        Interference Field experiment and member works.</p>
+      <p>Synestharium is independent. Synestharium+ membership helps keep it that way, and opens the Collective and the
+        Interference Field experiment.</p>
       <div className="actions">
         <Link className="text-link" href="/plans">Membership →</Link>
         <Link className="text-link muted-link" href="/signin">Sign in</Link>

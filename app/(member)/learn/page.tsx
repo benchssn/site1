@@ -19,6 +19,7 @@ export default async function Learn() {
       <p className="intro">Ordered syllabi of short works. Each part builds on the one before.</p>
     </header>
     <LearnTabs current="series" />
+    {series.length === 0 && <p className="muted">No series are published yet.</p>}
     <ul className="series-list">{series.map((entry) => {
       const state = seriesState(entry, progress);
       const memberParts = seriesWorks(entry).filter(({ item }) => item.access === "member").length;

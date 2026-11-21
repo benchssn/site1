@@ -18,6 +18,7 @@ export default async function Studies() {
       <p className="intro">Standalone audiovisual works. Watch them in any order, on their own or as a short practice of attention.</p>
     </header>
     <LearnTabs current="studies" />
+    {studies.length === 0 && <p className="muted">No standalone studies are published yet.</p>}
     <div className="card-grid">{studies.map((work) => <WorkCard key={work.slug} work={work} viewer={viewer}
       status={progress.done.has(work.slug) ? "Completed" : progress.started.has(work.slug) ? "In progress" : undefined} />)}</div>
   </div>;
