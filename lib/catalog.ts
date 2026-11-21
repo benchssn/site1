@@ -1,6 +1,8 @@
 // One catalogue feeds Home, Learn, Library, Spaces and the public site, so every surface
 // shows the same works with the same access rules.
 
+import type { ThemeId } from "./themes";
+
 export type Access = "free" | "member";
 export type WorkKind = "film" | "experience";
 
@@ -23,29 +25,11 @@ export type Work = {
   /** Instrumental works have no spoken content to transcribe. */
   speech: "none" | "transcript";
   soundNote: string;
+  /** Areas of exploration this work belongs to in the public archive. */
+  themes: ThemeId[];
 };
 
-export const works: Work[] = [
-  {
-    slug: "afterimage", index: "01", title: "Afterimage", kind: "film", category: "Light study", duration: "0:24",
-    description: "A suspended blue corona flickers over a low, slow-moving harmonic bed.",
-    access: "free", poster: "/art/afterimage.webp", media: { type: "public", src: "/films/afterimage.mp4" },
-    concepts: ["afterimage"], speech: "none", soundNote: "Instrumental soundtrack, no speech.",
-  },
-  {
-    slug: "selenite", index: "02", title: "Selenite", kind: "film", category: "Texture study", duration: "0:20",
-    description: "A fractured rose-colored surface paired with a cluster of slowly beating tones.",
-    access: "free", poster: "/art/selenite.webp", media: { type: "public", src: "/films/selenite.mp4" },
-    concepts: ["beating"], speech: "none", soundNote: "Instrumental soundtrack, no speech.",
-  },
-  {
-    slug: "interference-field", index: "03", title: "Interference Field", kind: "experience", category: "Interactive study",
-    duration: "Open-ended",
-    description: "Two wave sources overlap on a fine-line surface. Shift their phase difference to move the peaks and troughs, and hear a sine tone swell and vanish as the phase moves from 0° to 180°.",
-    access: "member", poster: "/art/interference.webp", media: { type: "space" },
-    concepts: ["interference", "phase"], speech: "none", soundNote: "Optional generated sine tone, no speech.",
-  },
-];
+export const works: Work[] = [];
 
 export type Series = {
   slug: string;
@@ -55,32 +39,11 @@ export type Series = {
   parts: { work: string; note: string }[];
 };
 
-export const series: Series[] = [
-  {
-    slug: "perception-studies",
-    title: "Perception Studies I",
-    premise: "Three short studies on how the senses assemble an image from light, colour and vibration. Begin with what the eye keeps after the light has gone, listen to two close tones fold into one pulse, then shape a wave field by hand.",
-    availability: "Available now · 3 parts",
-    parts: [
-      { work: "afterimage", note: "Watch for the colour that remains once the corona fades." },
-      { work: "selenite", note: "Listen for the slow swell where neighbouring tones meet." },
-      { work: "interference-field", note: "Move the phase and find where the surface flattens." },
-    ],
-  },
-];
+export const series: Series[] = [];
 
 export type Concept = { slug: string; title: string; summary: string };
 
-export const concepts: Concept[] = [
-  { slug: "afterimage", title: "Afterimage",
-    summary: "An image that persists after its stimulus has gone. Staring at a colour adapts the receptors that respond to it, so a complementary ghost appears on a neutral field." },
-  { slug: "beating", title: "Beating",
-    summary: "Two tones of slightly different frequency, sounded together, swell and fade at the rate of the difference between them." },
-  { slug: "interference", title: "Interference",
-    summary: "Overlapping waves add together. Where crest meets crest the surface rises; where crest meets trough the two cancel." },
-  { slug: "phase", title: "Phase",
-    summary: "Where a wave sits in its cycle. Two equal waves in phase double in height; offset by half a cycle (180°), they cancel." },
-];
+export const concepts: Concept[] = [];
 
 export const findWork = (slug: string) => works.find((entry) => entry.slug === slug);
 export const findSeries = (slug: string) => series.find((entry) => entry.slug === slug);
@@ -111,8 +74,6 @@ export type Space = {
 };
 
 export const spaces: Space[] = [
-  { slug: "interference-field", title: "Interference Field", status: "active", access: "member",
-    description: "A full-frame wave surface you tune by hand, with a sine tone that rises and falls with the waves." },
   { slug: "world", title: "A navigable world", status: "planned", access: "member",
     description: "A walkable 3D space for gatherings and installations.",
     dependency: "Needs a 3D engine, world assets and a presence service. To be scoped as a separate build." },

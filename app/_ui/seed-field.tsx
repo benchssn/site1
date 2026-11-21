@@ -46,7 +46,7 @@ export default function SeedField() {
         // Each shell has its own slow sine LFO, so the figure breathes in overlapping waves.
         const breath = Math.sin(t * .21 + shell * .9) * .5 + .5;
         const spin = t * .016 * (shell % 2 ? -1 : 1) + shell * .26;
-        ctx!.strokeStyle = `rgba(199, 214, 184, ${(.46 - shell * .075).toFixed(3)})`;
+        ctx!.strokeStyle = `rgba(196, 201, 207, ${(.46 - shell * .075).toFixed(3)})`;
         ctx!.lineWidth = shell === 0 ? 1.1 : .8;
         if (shell === 0) {
           // Seed of life: one centre circle and six around it, each passing through the centre.

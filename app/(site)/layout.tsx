@@ -1,34 +1,32 @@
 import Link from "next/link";
 import { SeedMark } from "@/app/_ui/icons";
-import { getViewer } from "@/lib/viewer";
+import { SiteNav } from "@/app/_ui/site-nav";
+import { instagramProfile } from "@/lib/archive";
 
-export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  let signedIn = false;
-  try { signedIn = Boolean(await getViewer()); } catch { /* Header falls back to signed-out links. */ }
+// Static shell: the account link is resolved client-side so public pages can be prerendered.
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return <>
     <header className="site-header">
       <div className="wrap site-header-inner">
-        <Link href="/" className="brand"><SeedMark /> Synestharium</Link>
-        <nav aria-label="Site">
-          <Link href="/plans" className="hide-small">Plans</Link>
-          {signedIn
-            ? <Link href="/dashboard" className="button primary small">Open workspace</Link>
-            : <>
-              <Link href="/signin">Sign in</Link>
-              <Link href="/plans" className="button primary small">Join</Link>
-            </>}
-        </nav>
+        <Link href="/" className="brand" aria-label="Synestharium, home"><SeedMark /> <span>Synestharium</span></Link>
+        <SiteNav />
       </div>
     </header>
-    <main id="main">{children}</main>
+    <main id="main" className="site-main">{children}</main>
     <footer className="site-footer">
       <div className="wrap site-footer-inner">
-        <span><SeedMark size={16} /> © {new Date().getFullYear()} Synestharium</span>
+        <div className="footer-brand">
+          <span className="brand"><SeedMark size={16} /> Synestharium</span>
+          <p>An independent audiovisual project on consciousness and the nature of reality.</p>
+        </div>
         <nav aria-label="Footer">
-          <Link href="/plans">Plans</Link>
+          <Link href="/transmissions">Transmissions</Link>
+          <Link href="/archive">Archive</Link>
+          <Link href="/plans">Membership</Link>
           <Link href="/signin">Sign in</Link>
-          <Link href="/signin?mode=register">Create account</Link>
+          <a href={instagramProfile} rel="noopener">Instagram</a>
         </nav>
+        <p className="footer-legal mono">© {new Date().getFullYear()} Synestharium</p>
       </div>
     </footer>
   </>;

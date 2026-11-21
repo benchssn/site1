@@ -15,7 +15,7 @@ How the public site, enrollment and the signed-in workspace fit together, what i
 | Messages | `/community/messages` | Planned | See below. |
 | Learn | `/learn`, `/learn/series/[slug]`, `/learn/studies` | Live | Series (ordered syllabus) and Studies (standalone films). |
 | Work detail | `/works/[slug]` | Live | Shared by Home, Learn and Library. The access gate sits where playback starts. |
-| Spaces | `/spaces`, `/spaces/interference-field` | Live | The interactive Interference study, now full-frame and with sound. |
+| Spaces | `/spaces` | Live, empty | No space is open. The Interference study was a placeholder and has been removed. |
 | Spaces: world | `/spaces/world` | Planned | See below. |
 | Library | `/library`, `/library/releases`, `/library/concepts[/slug]`, `/library/transcripts`, `/library/sources` | Live; Sources planned | All current releases are instrumental, so Transcripts lists each work's sound note. |
 | Account | `/account`, `/account/plan` | Live | Current plan, Stripe billing portal, and in-app upgrade with `?return=`. |

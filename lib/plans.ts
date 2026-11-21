@@ -17,10 +17,10 @@ export const tiers: Tier[] = [
   {
     id: "free",
     name: "Free account",
-    summary: "Watch the open studies and follow your progress.",
+    summary: "Browse the Library and see the Collective’s rooms.",
     unlocks: [
-      "Open studies: " + freeWorks.join(" and "),
-      "Browse every series syllabus and the full Library",
+      ...(freeWorks.length ? ["Open works: " + freeWorks.join(", ")] : []),
+      "Browse the full Library",
       "Progress saved across devices",
       "See the Collective's room directory",
     ],
@@ -28,10 +28,10 @@ export const tiers: Tier[] = [
   {
     id: "plus",
     name: "Synestharium+",
-    summary: "Everything in Free, plus the members' rooms, Spaces and member works.",
+    summary: "Everything in Free, plus the members' rooms.",
     unlocks: [
       "The Collective: " + rooms.length + " moderated live rooms (" + rooms.map(({ name }) => name.replace(/^The /, "")).join(", ") + ")",
-      "Spaces: " + activeSpaces.join(", "),
+      ...(activeSpaces.length ? ["Spaces: " + activeSpaces.join(", ")] : []),
       ...(memberSeriesParts.length ? ["Every part of each series, including " + memberSeriesParts.join(", ")] : []),
       ...(otherMemberWorks.length ? ["Member works: " + otherMemberWorks.join(", ")] : []),
       "Everything in the Free account",

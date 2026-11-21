@@ -36,7 +36,7 @@ export default async function Account({ searchParams }: { searchParams: Promise<
       <p className="tile-big">{viewer.member ? "Synestharium+" : "Free account"}</p>
       <p className="muted">{viewer.statusUnavailable ? "Membership status is temporarily unavailable."
         : viewer.member ? (until ? "Active. Access through " + until + "." : "Active.")
-          : "Open studies, the Library and progress tracking."}</p>
+          : "The Library and progress tracking."}</p>
       <div className="actions">
         <Link className="button primary small" href="/account/plan">{viewer.member ? "View plan" : "Upgrade to Synestharium+"}</Link>
         {viewer.hasCustomer && billingReady() && <form action={openPortal}><button className="button secondary small">Billing and invoices</button></form>}

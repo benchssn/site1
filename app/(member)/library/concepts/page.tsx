@@ -16,6 +16,7 @@ export default async function Concepts() {
       <p className="intro">Short entries on the perceptual and physical ideas behind each release.</p>
     </header>
     <LibraryTabs current="/library/concepts" />
+    {concepts.length === 0 && <p className="muted">No concept entries yet.</p>}
     <ul className="concept-grid">{concepts.map((concept) => <li key={concept.slug}>
       <Link href={"/library/concepts/" + concept.slug}>
         <strong>{concept.title}</strong>
