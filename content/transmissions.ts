@@ -24,7 +24,7 @@ import type { Transmission } from "@/lib/archive";
  *     { title: "Book title", author: "Author name", year: 2021, kind: "book" },
  *     { title: "Paper title", author: "Surname et al.", year: 2019, kind: "research", url: "https://doi.org/…" },
  *   ],
- *   related: ["interference-field"],                          // slugs of other archive entries
+ *   related: ["another-slug"],                                // slugs of other archive entries
  * },
  */
 

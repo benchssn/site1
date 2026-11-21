@@ -62,8 +62,10 @@ export default function Home() {
         <a className="button secondary" href={instagramProfile} rel="noopener">Watch on Instagram · @synestharium</a>
       </div>}
 
-      <h3 className="subhead">From the studio</h3>
-      <div className="entry-grid">{studio.map((entry) => <EntryCard key={entry.slug} entry={entry} />)}</div>
+      {studio.length > 0 && <>
+        <h3 className="subhead">From the studio</h3>
+        <div className="entry-grid">{studio.map((entry) => <EntryCard key={entry.slug} entry={entry} />)}</div>
+      </>}
     </Section>
 
     <Section id="themes" number="02" label="Areas of exploration" title="Five questions that keep returning">
@@ -120,8 +122,8 @@ export default function Home() {
 
     <section className="support wrap" aria-labelledby="support-title" data-reveal>
       <h2 id="support-title">Support the work</h2>
-      <p>Synestharium is independent. Synestharium+ membership helps keep it that way, and opens the Collective and the
-        Interference Field experiment.</p>
+      <p>Synestharium is independent. Synestharium+ membership helps keep it that way, and opens
+        the Collective.</p>
       <div className="actions">
         <Link className="text-link" href="/plans">Membership →</Link>
         <Link className="text-link muted-link" href="/signin">Sign in</Link>

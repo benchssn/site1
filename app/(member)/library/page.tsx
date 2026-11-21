@@ -26,6 +26,7 @@ export default async function Library() {
         <Link className="text-link" href="/library/releases">Browse releases <Icon name="arrow" size={14} /></Link>
       </div>
       {!viewer.member && locked > 0 && <p className="muted">{locked} member release{locked > 1 ? "s" : ""} marked with a lock. Open one to see how to unlock it.</p>}
+      {works.length === 0 && <p className="muted">No releases yet.</p>}
       <div className="card-grid">{works.map((work) => <WorkCard key={work.slug} work={work} viewer={viewer} />)}</div>
     </section>
 
@@ -34,6 +35,7 @@ export default async function Library() {
         <h2 id="lib-concepts">Concepts <span className="count mono">{concepts.length}</span></h2>
         <Link className="text-link" href="/library/concepts">All concepts <Icon name="arrow" size={14} /></Link>
       </div>
+      {concepts.length === 0 && <p className="muted">No concept entries yet.</p>}
       <ul className="concept-grid">{concepts.map((concept) => <li key={concept.slug}>
         <Link href={"/library/concepts/" + concept.slug}><strong>{concept.title}</strong><span>{concept.summary}</span></Link>
       </li>)}</ul>

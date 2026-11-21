@@ -27,6 +27,7 @@ export default async function Releases({ searchParams }: { searchParams: Promise
       {filters.map(({ id, label }) => <Link key={id} href={id === "all" ? "/library/releases" : "/library/releases?access=" + id}
         aria-current={filter.id === id ? "page" : undefined}>{label}</Link>)}
     </nav>
+    {shown.length === 0 && <p className="muted">No releases yet.</p>}
     <div className="card-grid">{shown.map((work) => <WorkCard key={work.slug} work={work} viewer={viewer} />)}</div>
   </div>;
 }

@@ -11,7 +11,7 @@ export default async function Plans() {
   return <section className="wrap page plans-page">
     <p className="eyebrow mono">Membership</p>
     <h1>Choose how you’d like to join</h1>
-    <p className="intro">Start with a free account, or join Synestharium+ for the members’ rooms and Spaces.
+    <p className="intro">Start with a free account, or join Synestharium+ for the members’ rooms.
       You can change or cancel your membership at any time from your account.</p>
     <PlanTable viewer={viewer} price={price} />
     <p className="fineprint plans-foot">Already a member? <Link href="/signin">Sign in</Link> to manage your plan.</p>

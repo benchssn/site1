@@ -14,7 +14,7 @@ export default async function Spaces() {
     <header className="screen-head">
       <p className="eyebrow mono">Spaces</p>
       <h1>Spaces</h1>
-      <p className="intro">Immersive studies you step into, not just watch.</p>
+      <p className="intro">Immersive works you step into, not just watch. None is open yet.</p>
     </header>
     <ul className="space-list">{spaces.map((space) => {
       const poster = findWork(space.slug)?.poster;

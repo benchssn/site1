@@ -28,10 +28,10 @@ export const tiers: Tier[] = [
   {
     id: "plus",
     name: "Synestharium+",
-    summary: "Everything in Free, plus the members' rooms and Spaces.",
+    summary: "Everything in Free, plus the members' rooms.",
     unlocks: [
       "The Collective: " + rooms.length + " moderated live rooms (" + rooms.map(({ name }) => name.replace(/^The /, "")).join(", ") + ")",
-      "Spaces: " + activeSpaces.join(", "),
+      ...(activeSpaces.length ? ["Spaces: " + activeSpaces.join(", ")] : []),
       ...(memberSeriesParts.length ? ["Every part of each series, including " + memberSeriesParts.join(", ")] : []),
       ...(otherMemberWorks.length ? ["Member works: " + otherMemberWorks.join(", ")] : []),
       "Everything in the Free account",

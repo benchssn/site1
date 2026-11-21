@@ -29,16 +29,7 @@ export type Work = {
   themes: ThemeId[];
 };
 
-export const works: Work[] = [
-  {
-    slug: "interference-field", index: "01", title: "Interference Field", kind: "experience", category: "Interactive study",
-    duration: "Open-ended",
-    description: "Two wave sources overlap on a fine-line surface. Shift their phase difference to move the peaks and troughs, and hear a sine tone swell and vanish as the phase moves from 0° to 180°.",
-    access: "member", poster: "/art/interference.webp", media: { type: "space" },
-    concepts: ["interference", "phase"], speech: "none", soundNote: "Optional generated sine tone, no speech.",
-    themes: ["reality"],
-  },
-];
+export const works: Work[] = [];
 
 export type Series = {
   slug: string;
@@ -52,12 +43,7 @@ export const series: Series[] = [];
 
 export type Concept = { slug: string; title: string; summary: string };
 
-export const concepts: Concept[] = [
-  { slug: "interference", title: "Interference",
-    summary: "Overlapping waves add together. Where crest meets crest the surface rises; where crest meets trough the two cancel." },
-  { slug: "phase", title: "Phase",
-    summary: "Where a wave sits in its cycle. Two equal waves in phase double in height; offset by half a cycle (180°), they cancel." },
-];
+export const concepts: Concept[] = [];
 
 export const findWork = (slug: string) => works.find((entry) => entry.slug === slug);
 export const findSeries = (slug: string) => series.find((entry) => entry.slug === slug);
@@ -88,8 +74,6 @@ export type Space = {
 };
 
 export const spaces: Space[] = [
-  { slug: "interference-field", title: "Interference Field", status: "active", access: "member",
-    description: "A full-frame wave surface you tune by hand, with a sine tone that rises and falls with the waves." },
   { slug: "world", title: "A navigable world", status: "planned", access: "member",
     description: "A walkable 3D space for gatherings and installations.",
     dependency: "Needs a 3D engine, world assets and a presence service. To be scoped as a separate build." },

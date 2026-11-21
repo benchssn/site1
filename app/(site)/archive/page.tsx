@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { EntryList, ThemeFilter } from "@/app/_ui/archive-ui";
-import { archive } from "@/lib/archive";
+import { archive, instagramProfile } from "@/lib/archive";
 
 export const metadata: Metadata = {
   title: "Archive",
@@ -12,11 +12,15 @@ export default function Archive() {
     <header className="page-head">
       <p className="section-label mono">Archive</p>
       <h1>Archive</h1>
-      <p className="lede">Every published work, filed by the questions it explores: narrated transmissions and experiments you can
-        operate yourself.</p>
+      <p className="lede">Every published work, filed by the questions it explores.</p>
     </header>
-    <ThemeFilter />
-    <p className="count-line mono" role="status">{archive.length} {archive.length === 1 ? "work" : "works"}</p>
-    <EntryList entries={archive} />
+    {archive.length > 0 ? <>
+      <ThemeFilter />
+      <p className="count-line mono" role="status">{archive.length} {archive.length === 1 ? "work" : "works"}</p>
+      <EntryList entries={archive} />
+    </> : <div className="callout">
+      <p>The archive is empty for now. Transmissions are published on Instagram first and gathered here with their transcripts and sources.</p>
+      <a className="button secondary" href={instagramProfile} rel="noopener">Watch on Instagram · @synestharium</a>
+    </div>}
   </div>;
 }

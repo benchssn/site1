@@ -21,7 +21,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
   const state = featured ? seriesState(featured, progress) : null;
   const next = state?.next?.item;
   const nextOpen = next ? canAccess(next.access, viewer) : false;
-  const space = spaces.find((entry) => entry.status === "active")!;
+  const space = spaces.find((entry) => entry.status === "active");
   const doneLabel = (slug: string) => progress.done.has(slug) ? "Completed" : progress.started.has(slug) ? "In progress" : undefined;
 
   return <div className="screen">
@@ -70,7 +70,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         </div>
       </section>
 
-      <section className="tile" aria-labelledby="spaces-tile">
+      {space && <section className="tile" aria-labelledby="spaces-tile">
         <h2 id="spaces-tile" className="tile-label mono">Spaces</h2>
         <p className="tile-big">{space.title}</p>
         <p className="muted">{space.description}</p>
@@ -78,7 +78,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
           <Link className="button secondary small" href={"/spaces/" + space.slug}>{viewer.member ? "Enter" : "Preview"}</Link>
           <span className="muted small-text"><PlannedBadge /> More spaces</span>
         </div>
-      </section>
+      </section>}
     </div>
 
     <section className="block" aria-labelledby="releases-title">
@@ -86,6 +86,7 @@ export default async function Dashboard({ searchParams }: { searchParams: Promis
         <h2 id="releases-title">Releases</h2>
         <Link href="/library/releases" className="text-link">All releases <Icon name="arrow" size={14} /></Link>
       </div>
+      {works.length === 0 && <p className="muted">No releases yet.</p>}
       <div className="card-grid">
         {[...works].reverse().map((work) => <WorkCard key={work.slug} work={work} viewer={viewer} status={doneLabel(work.slug)} />)}
       </div>

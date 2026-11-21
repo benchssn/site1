@@ -17,7 +17,7 @@ How this was assessed: by reading the whole repository, running a production bui
 | Member data | Supabase tables: `billing_customers`, `collective_*` (rooms, messages, presence, reports, mutes), `member_progress`, legacy `chat_messages`; private `member-media` bucket | **Keep unchanged** |
 | Content | One static TS file, `lib/catalog.ts`: works, series, concepts, spaces | Extend (see §5) |
 | Community | The Collective: 3 Realtime rooms (Commons, Mind, Laboratory) with moderation, reporting and SQL-level access checks | Keep; reposition |
-| Interactive | `/spaces/interference-field`: a canvas wave field with a sine tone | Keep as an *Experiment* |
+| Interactive | ~~`/spaces/interference-field`~~ | **Removed** (placeholder, at the owner's request) |
 
 ### Live routes
 
@@ -35,7 +35,7 @@ Supabase (auth, Postgres, Realtime, Storage), Stripe, and Google Fonts (CSS `@im
 | Asset | What it is | Notes |
 |---|---|---|
 | ~~`public/films/afterimage.mp4`, `selenite.mp4` and posters~~ | Placeholder media generated with ChatGPT, **not Synestharium work** | **Removed** at the owner's request, along with their concepts and the series built on them |
-| `public/art/interference.webp` | Poster for the interference experiment | Browser-made, not a TouchDesigner export |
+| ~~`public/art/interference.webp`~~ | Placeholder | **Removed** |
 | `public/art/seed.jpg` | Seed-of-life line drawing | Unused; the hero uses the animated seed-of-life field (`app/_ui/seed-field.tsx`) |
 | `member-media` bucket | Unknown contents | Cannot be inspected without credentials |
 
@@ -54,7 +54,7 @@ Supabase (auth, Postgres, Realtime, Storage), Stripe, and Google Fonts (CSS `@im
 
 - The Collective homepage preview shows **invented member messages** from "aftertone" and "prismfield" (`app/_ui/collective/preview.tsx`). These are fabricated. Remove them, or show only the real room structure.
 - The planned "navigable world" in Spaces, and the "Messages" and "Sources" pages, are placeholders shown to users. They should not be public-facing.
-- Concept summaries for interference and phase are kept. Those for afterimage and beating were removed with the placeholder works.
+- All four concept summaries (afterimage, beating, interference, phase) were removed with the placeholder works.
 
 ### Visual identity
 
@@ -150,7 +150,7 @@ Adding a transmission means adding one object (and later, if wanted, a Markdown 
 ## 6. Implementation plan (incremental; each step builds and is checked)
 
 1. **Foundations:** design tokens (silver, cyan, violet), `next/font` instead of `@import`, and a new public header and footer with the primary nav. Make public pages statically renderable: the header's auth state moves to a small client island, and `proxy.ts` no longer sets `no-store` on public pages. Auth gating behaviour stays identical.
-2. **Data model:** extend `catalog.ts` additively, with themes, formats, sources and transcript fields. Interference Field is tagged as an *experiment*.
+2. **Data model:** extend `catalog.ts` additively, with themes, formats, sources and transcript fields.
 3. **Homepage:** a hero built on the real artwork (a poster plus a muted, looping, reduced-motion-aware preview of an existing film), the brief's copy, Featured Transmissions, Areas of Exploration (only themes with works), The Philosophy, The Collective (real room list, no fake messages), and one quiet membership block.
 4. **Transmissions and archive:** list and detail pages, theme filters, transcripts, sources, related works, and a `/observatory` redirect.
 5. **About and Collective** public pages.
@@ -197,5 +197,5 @@ Add an entry to `content/transmissions.ts`: slug, title, the reel's share link, 
 - The Instagram embed's height adjusts using Instagram's own `MEASURE` message, with a 720px fallback. This could not be tested against a live reel here, so check it once the first reel is added.
 - Collective and About in the nav point to homepage sections until step 5 builds their pages.
 - `app/_ui/collective/preview.tsx` still shows two invented messages on the members' `/community` page (for non-members). It was left alone because the members' area was kept as-is. Recommendation: remove the messages.
-- Afterimage and Selenite were ChatGPT placeholders and have been removed everywhere: their files, catalogue entries, the "afterimage" and "beating" concepts, and the members' "Perception Studies I" series (which was built around them). Learn and Studies now say nothing is published yet, and the dashboard hides the series tile when there are no series. Old links to them return 404. Any `member_progress` rows for those slugs are harmless and simply unused.
+- Afterimage and Selenite were ChatGPT placeholders and have been removed everywhere: their files, catalogue entries, the "afterimage" and "beating" concepts, and the members' "Perception Studies I" series (which was built around them). Learn and Studies now say nothing is published yet, and the dashboard hides the series tile when there are no series. Old links to them return 404. Interference Field was then removed the same way: its space, renderer, poster and the interference and phase concepts. **The catalogue now holds no works**, and the site is waiting for the first transmissions. The members' Spaces section lists only the planned world, and the Plans page offers only the Collective. Any `member_progress` rows for those slugs are harmless and simply unused.
 - Still to do: steps 5 (About, Collective pages), 6 (Plans copy), 7 (SEO: OG image, sitemap, robots, JSON-LD) and 8 (full verification pass).
