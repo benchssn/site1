@@ -34,11 +34,11 @@ Supabase (auth, Postgres, Realtime, Storage), Stripe, and Google Fonts (CSS `@im
 
 | Asset | What it is | Notes |
 |---|---|---|
-| `public/films/afterimage.mp4` | 24s, 960×540, H.264/AAC, instrumental | Blue corona; a real generative work |
+| `public/films/afterimage.mp4` | 24s, 960×540, H.264/AAC, instrumental | **Not Synestharium artwork** (confirmed by the owner). Not used as a hero or brand image. |
 | `public/films/selenite.mp4` | 20s, 960×540, H.264/AAC, instrumental | Rose/violet variant of the same system |
 | `public/art/afterimage.webp`, `selenite.webp` | 1680×920 posters | Good hero material |
 | `public/art/interference.webp` | Poster for the interference experiment | Browser-made, not a TouchDesigner export |
-| `public/art/seed.jpg` | Seed-of-life line drawing | **Unused** |
+| `public/art/seed.jpg` | Seed-of-life line drawing | Unused; the hero uses the animated seed-of-life field (`app/_ui/seed-field.tsx`) |
 | `member-media` bucket | Unknown contents | Cannot be inspected without credentials |
 
 **The six narrated transmissions named in the brief are not in the repository.** These are "Consciousness May Be a Process, Not a Thing", "The Self Is Not the Commander", "Intelligence Does Not Require a Brain", "Your Brain Creates Order From Chaos", "The Fourth Dimension Is Hiding in Plain Sight" and "You Were Never Separate". There are no video files, transcripts, sources, dates or platform links for any of them. Both existing films are instrumental. Per the brief, these titles will not be published until real files and verified metadata are supplied.
@@ -184,7 +184,7 @@ Until transmissions are supplied, Featured Transmissions will show the two real 
 |---|---|
 | 1. Foundations | Inter and IBM Plex Mono through `next/font` (the render-blocking `@import` is gone). New tokens: black, silver, cyan `#8fd3e8`, violet `#b4a6f4`. The member area's green tints are swapped for cool equivalents. New public header with Home · Transmissions · Archive · Collective · About, plus a quieter Membership / Sign in, and a full-screen mobile menu. The header learns sign-in state from `/api/session`, so `/`, `/transmissions` and `/archive/*` are now **static and cacheable** (they were rendered per request with `no-store`). The `proxy.ts` gating of member routes is unchanged. |
 | 2. Data model | `lib/themes.ts` holds the five themes. `content/transmissions.ts` is where reels are added, with a documented template. `lib/archive.ts` normalises transmissions and studio works into one list, and provides reel link parsing (a malformed link fails the build), related works and active themes. Works in `lib/catalog.ts` gain a `themes` field. |
-| 3. Homepage | The hero uses the real Afterimage artwork, with a muted looping excerpt that starts only when motion is allowed and Save-Data is off. Sections: Transmissions, Areas of exploration, The philosophy (evidence / interpretation / speculation), The Collective (real rooms and a real guideline, no invented messages), and one quiet "Support the work" block. The seed-of-life hero canvas has been removed. |
+| 3. Homepage | The hero uses the animated seed-of-life field, restored at the owner's request and redrawn in silver; it stops under reduced motion and off-screen. Sections: Transmissions, Areas of exploration, The philosophy (evidence / interpretation / speculation), The Collective (real rooms and a real guideline, no invented messages), and one quiet "Support the work" block. |
 | 4. Transmissions and archive | `/transmissions` and `/transmissions/[slug]`: a click-to-load Instagram embed (nothing loads from Instagram until play), synopsis, themes, kinds of claim, transcript, sources and related works. `/archive` has theme filters as static pages at `/archive/themes/[theme]`; only themes with work get a page. `/archive/[slug]` covers studies and experiments. `/observatory/[slug]` now sends a 308 redirect to `/archive/[slug]`. |
 
 Checks run: production build; axe (WCAG 2.1 AA and best practice) on every new page at 1440px and 390px, with no violations; a keyboard tab order check with a visible focus ring at each stop; no horizontal overflow at 390, 768 or 1440px; and the member dashboard and plans page checked with the local preview account.
@@ -199,4 +199,5 @@ Add an entry to `content/transmissions.ts`: slug, title, the reel's share link, 
 - The Instagram embed's height adjusts using Instagram's own `MEASURE` message, with a 720px fallback. This could not be tested against a live reel here, so check it once the first reel is added.
 - Collective and About in the nav point to homepage sections until step 5 builds their pages.
 - `app/_ui/collective/preview.tsx` still shows two invented messages on the members' `/community` page (for non-members). It was left alone because the members' area was kept as-is. Recommendation: remove the messages.
+- Afterimage is not Synestharium artwork. It still appears in the archive, on the homepage under "From the studio", and in the members' series. Decide whether it should be removed or credited.
 - Still to do: steps 5 (About, Collective pages), 6 (Plans copy), 7 (SEO: OG image, sitemap, robots, JSON-LD) and 8 (full verification pass).

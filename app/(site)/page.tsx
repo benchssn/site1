@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { AmbientFilm } from "@/app/_ui/ambient-film";
 import { EntryCard } from "@/app/_ui/archive-ui";
 import ScrollStory from "@/app/_ui/scroll-story";
+import SeedField from "@/app/_ui/seed-field";
 import {
   archive, entriesForTheme, featuredTransmissions, instagramProfile, registerLabel, type Register,
 } from "@/lib/archive";
-import { findWork } from "@/lib/catalog";
 import { guidelines, rooms } from "@/lib/collective";
 import { themes } from "@/lib/themes";
 
@@ -29,7 +27,6 @@ function Section({ id, number, label, title, children, className = "" }: {
 }
 
 export default function Home() {
-  const hero = findWork("afterimage")!;
   const reels = featuredTransmissions(6);
   const studio = archive.filter((entry) => entry.format !== "transmission");
   const registers = Object.entries(registerLabel) as [Register, { title: string; line: string }][];
@@ -38,10 +35,7 @@ export default function Home() {
   return <div className="home">
     <ScrollStory />
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-art" aria-hidden="true">
-        <Image src={hero.poster} alt="" fill priority sizes="100vw" />
-        {hero.media.type === "public" && <AmbientFilm src={hero.media.src} />}
-      </div>
+      <div className="hero-art" aria-hidden="true"><SeedField /></div>
       <div className="wrap hero-copy">
         <h1 id="hero-title">
           <span className="wordmark">Synestharium</span>
@@ -54,7 +48,6 @@ export default function Home() {
           <Link className="button ghost" href="#philosophy">About the Project</Link>
         </div>
       </div>
-      <p className="hero-credit mono wrap">From <Link href={"/archive/" + hero.slug}>{hero.title}</Link>, a generative study</p>
     </section>
 
     <Section id="transmissions" number="01" label="Transmissions" title="Ideas, set to light and sound">
